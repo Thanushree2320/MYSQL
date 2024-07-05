@@ -1,0 +1,479 @@
+-- Create Branch table query 
+
+
+CREATE TABLE Branch (
+BID VARCHAR(20) PRIMARY KEY,
+Branch_name VARCHAR(255) NOT NULL
+);
+
+
+-- Create Companies table query 
+
+
+CREATE TABLE Companies (
+CID VARCHAR(20) PRIMARY KEY,
+company_name VARCHAR(255) NOT NULL,
+students_placed INT,
+package DECIMAL(10, 2)
+);
+
+
+-- Create Subjects table
+
+CREATE TABLE Subjects (
+SID VARCHAR(20) PRIMARY KEY,
+subject_name VARCHAR(255) NOT NULL,
+semester INT,
+hours INT
+);
+
+
+-- Create Lectures table
+
+CREATE TABLE Lectures1 (
+LID VARCHAR(20) PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+designation VARCHAR(255) NOT NULL,
+college VARCHAR(255) NOT NULL,
+branch VARCHAR(20),
+SID VARCHAR(20),
+FOREIGN KEY (SID) REFERENCES Subjects(SID)
+);
+
+
+-- Create Students table
+
+CREATE TABLE Students (
+usn VARCHAR(10) PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+branch VARCHAR(20),
+college VARCHAR(255) NOT NULL,
+semester INT,
+CGPA DECIMAL(3, 2),
+DOJ DATE,
+DOG DATE,
+gender VARCHAR(10),
+section VARCHAR(10),
+CID VARCHAR(20),
+job_role VARCHAR(255),
+package DECIMAL(10, 2),
+FOREIGN KEY (CID) REFERENCES Companies(CID)
+);
+
+
+-- Create Marks table
+
+CREATE TABLE Marks (
+usn VARCHAR(10),
+sid VARCHAR(20),
+test1 INT,
+test2 INT,
+test3 INT,
+subject_cgpa DECIMAL(3, 2),
+FOREIGN KEY (usn) REFERENCES Students(usn),
+FOREIGN KEY (sid) REFERENCES Subjects(SID)
+);
+
+--------------------------------------------
+
+-- Insert data into the Branch table
+
+INSERT INTO Branch (BID, Branch_name) VALUES
+('CSE1', 'Computer Science and Engineering'),
+('CSE3', 'Computer Science and Engineering'),
+('CV1', 'Civil Engineering'),
+('ECE1', 'Electronics Communication Engineering'),
+('ISE1', 'Information Science and Engineering');
+
+
+-- Insert data into the Companies table
+
+INSERT INTO Companies (CID, company_name, students_placed, package) VALUES
+('CP4', 'Canopus Bengaluru', 280000, 360000),
+('DEL2', 'Deloitte Bengaluru', 2, 690000),
+('MS5', 'Meesho Bengaluru', 1, 1200000),
+('PW3', 'Pacewisdom Bengaluru', 2, 400000),
+('SR1', 'Surge Limited', 3, 360000);
+
+
+-- - - Insert data into the Subjects table
+
+INSERT INTO Subjects (SID, subject_name, semester, hours) VALUES
+('24SQL', 'Structured Query Language', 5, 40),
+('24PY', 'Python', 6, 50),
+('24DSA', 'Database Structured Algorithm', 3, 40),
+('24HTML', 'Hyper Text Markup Language', 6, 40),
+('24JS', 'Javascript', 5, 50);
+
+
+-- - - Insert data into the Lectures table
+
+INSERT INTO Lectures1 (LID, first_name, designation, college, branch, SID) VALUES
+('112P', 'Pooja', 'HOD', 'KSIT10', 'CSE1', '24SQL'),
+('237A', 'Arun', 'Assistant Professor', 'SIT10', 'ISE1', '24PY'),
+('576S', 'Seema', 'Professor', 'SIT20', 'CV1', '24HTML'),
+('622T', 'Tejaswini', 'Associate Professor', 'MRIT10', 'CSE3', '24JS'),
+('897K', 'Kavya', 'Assistant Professor', 'KSIT10', 'ECE1', '24DSA');
+
+
+
+
+-- - - Insert data into the Students table
+
+INSERT INTO Students (usn, first_name, branch, college, semester, CGPA, DOJ, DOG, gender, section, CID, job_role, package) VALUES
+('1SW24CS001', 'Sita', 'CSE1', 'Dr.AIT10', 5, 7, '2024-12-08', '2028-11-06', 'F', 'A', 'SR1', 'Junior Developer', 360000),
+('1SW24CS002', 'Krishna', 'CSE1', 'SIT10', 5, 7.8, '2024-12-08', '2028-11-06', 'M', 'B', 'DEL2', 'Data Analyst', 690000),
+('1SW24CS003', 'Ram', 'CSE3', 'SIT20', 5, 6.9, '2024-01-08', '2028-01-06', 'M', 'B', 'PW3', 'Python Developer', 400000),
+('1SW24CV001', 'Chetan', 'CV1', 'Dr.AIT10', 8, 8.1, '2024-10-08', '2028-10-06', 'M', 'A', 'MS5', 'Data Analyst', 1200000),
+('1SW24EC001', 'Raj', 'ECE1', 'Dr.AIT10', 6, 8.9, '2024-08-08', '2028-08-06', 'M', 'A', 'DEL2', 'Data Analyst', 690000),
+('1SW24EC002', 'Mourya', 'ECE1', 'MRIT10', 6, 7, '2024-10-08', '2028-10-06', 'M', 'B', 'PW3', 'Python Developer', 400000),
+('1SW24EC003', 'Surya', 'ECE3', 'SIT10', 5, 7.9, '2024-12-08', '2028-12-06', 'M', 'B', 'CP4', 'Software Engineer', 280000),
+('1SW241S001', 'Abhi', 'ISE1', 'MRIT10', 6, 9, '2024-05-08', '2028-05-06', 'M', 'A', 'CP4', 'Software Engineer', 280000),
+('1SW241S002', 'Basava', 'ISE1', 'KSIT10', 5, 9.1, '2024-10-08', '2028-10-12', 'M', 'B', 'MS5', 'Data Analyst', 1200000);
+
+
+-- - - Insert data into the Marks table
+
+INSERT INTO Marks (usn, sid, test1, test2, test3, subject_cgpa) VALUES
+('1SW24CS001', '24SQL', 30, 28, 25, 9.1),
+('1SW24CS002', '24PY', 29, 26, 25, 9),
+('1SW24CS003', '24DSA', 29, 24, 26, 8.9),
+('1SW24CV001', '24HTML', 22, 19, 18, 8.1),
+('1SW241S002', '24JS', 22, 30, 28, 7.9),
+('1SW24CS001', '24SQL', 28.5, 21, 18, 7.8),
+('1SW24EC001', '24PY', 19, 14, 13, 7),
+('1SW24EC002', '24DSA', 19, 24, 25, 7),
+('1SW24EC003', '24HTML', 24, 26, 28, 6.9),
+('1SW24CV001', '24JS', 21, 21, 21, 5.9);
+select *from branch;
+
+
+
+-- Create the database
+CREATE DATABASE company_db;
+
+-- Use the newly created database
+USE company_db;
+
+-- Create the departments table
+CREATE TABLE departments (
+    deptno INT PRIMARY KEY,
+    dname VARCHAR(50),
+    loc VARCHAR(50)
+);
+
+-- Insert data into the departments table
+INSERT INTO departments (deptno, dname, loc) VALUES
+(10, 'ACCOUNTING', 'NEW YORK'),
+(20, 'RESEARCH', 'DALLAS'),
+(30, 'SALES', 'CHICAGO'),
+(40, 'OPERATIONS', 'BOSTON');
+
+-- Create the employees table
+CREATE TABLE employees (
+    empno INT PRIMARY KEY,
+    ename VARCHAR(50),
+    job VARCHAR(50),
+    mgr INT,
+    hiredate DATE,
+    sal INT,
+    comm INT,
+    deptno INT,
+    FOREIGN KEY (deptno) REFERENCES departments(deptno)
+);
+
+-- Insert data into the employees table
+INSERT INTO employees (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES
+(7369, 'SMITH', 'CLERK', 7902, '1980-12-17', 800, NULL, 20),
+(7499, 'ALLEN', 'SALESMAN', 7698, '1981-02-20', 1600, 300, 30),
+(7521, 'WARD', 'SALESMAN', 7698, '1981-02-22', 1250, 500, 30),
+(7566, 'JONES', 'MANAGER', 7839, '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN', 'SALESMAN', 7698, '1981-09-28', 1250, 1400, 30),
+(7698, 'BLAKE', 'MANAGER', 7839, '1981-05-01', 2850, NULL, 30),
+(7782, 'CLARK', 'MANAGER', 7839, '1981-06-09', 2450, NULL, 10),
+(7788, 'SCOTT', 'ANALYST', 7566, '1987-04-19', 3000, NULL, 20),	
+(7839, 'KING', 'PRESIDENT', NULL, '1981-11-17', 5000, NULL, 10),
+(7844, 'TURNER', 'SALESMAN', 7698, '1981-09-08', 1500, 0, 30),
+(7876, 'ADAMS', 'CLERK', 7788, '1987-05-23', 1100, NULL, 20),
+(7900, 'JAMES', 'CLERK', 7698, '1981-12-03', 950, NULL, 30),
+(7902, 'FORD', 'ANALYST', 7566, '1981-12-03', 3000, NULL, 20),
+(7934, 'MILLER', 'CLERK', 7782, '1982-01-23', 1300, NULL, 10);
+
+select ename,deptno
+from employees
+where deptno=10 and job='manager';
+
+
+
+
+
+select ename,deptno
+from employees
+where deptno NOT IN (10,40);
+
+select ename,deptno,hiredate ,(sal*12)as annualsalary
+from employees
+where deptno=30 and job='salesman' and sal*12>10000;
+
+select ename,sal,deptno,(sal*12)as annualsalary
+from employees
+where deptno=20 and sal>1100 and (sal*12)>12000;
+
+select ename,hiredate
+from employees
+where hiredate between '1981-12-31' and '1987-01-01';
+
+select ename,hiredate,deptno
+from employees
+where hiredate between'1981-01-01' and '1981-12-31' and deptno=20 and sal>2000;
+
+
+select ename,sal 
+from employees
+where sal NOT BETWEEN 1000 and 3000 ;
+
+select ename ,sal
+from employees
+where sal=(select max(sal) from employees);
+
+select ename,sal,empno 
+from employees
+ where sal >1000 group by empno; 
+ 
+ select ename,job,deptno
+ from employee
+ where job='clerk'or job='salesman' and deptno=10 or deptno=30 and sal>1800;
+ 
+ select ename
+ from employees
+ where ename LIKE 'S%';
+ 
+ select ename
+ from employees
+ where ename LIKE '%A';
+ 
+ select ename
+ from employees
+ where ename LIKE '_M%';
+ 
+ select ename,hiredate
+ from employees
+ where hiredate LIKE '%-04-%';
+ 
+ select ename
+ from employees
+ where ename LIKE '%a%a%';
+ 
+ select count(*)
+ from employees
+ where ename like '%e%';
+ 
+ select avg(sal),sum(sal),count(ename),max(sal)
+ from employees
+ where job='president';
+ 
+ select deptno,max(sal)
+ from employees
+ group by deptno;
+ 
+  select job,max(sal)
+ from employees
+ group by job;
+ 
+ select job,deptno,max(sal)
+ from employees
+ group by job,deptno;
+ 
+ select count(ename),job,deptno
+ from employees
+ where ename like '%a%'
+ group by job,deptno
+ order by job DESC;
+ 
+ select count(ename),job,deptno
+ from employees
+ group by job,deptno
+ having count(deptno)>3
+ order by deptno ASC;
+ 
+ select deptno,count(*)
+ from employees
+ group by deptno
+ having count(*)>=3;
+ 
+ select ename 
+ from employees
+ where sal=(select sal from employees where ename='miller');
+ 
+ select ename, deptno
+ from employees
+ where deptno=(select deptno from employees where ename='smith');
+ 
+ select ename ,hiredate
+ from employees
+ where hiredate>(select hiredate from employees where ename='jones');
+ 
+ select ename,sal,deptno
+ from employees
+ where deptno=(select deptno from employees where ename='james')and sal>2000;
+ 
+ select * from employees
+ where sal>(select sal from employees where ename='smith') and sal<(select sal from employees where ename='king');
+ 
+ select ename
+ from employees
+ where deptno=(select deptno from employees where ename='james')and sal>(select sal from employees where ename='smith')and job=(select job from employees where ename='miller')and hiredate>(select hiredate from employees where ename='martin');
+ 
+ select dname
+ from departments
+ where deptno=(select deptno from employees where ename='miller');
+ 
+ select count(ename)
+ from employees
+ where deptno=(select deptno from departments where dname='accounting');
+ 
+ select *
+ from employees
+ where job=(select job from employees where ename ='miller')and deptno=(select deptno from departments where loc='new york'); 
+ -- 51
+ select ename,sal
+ from employees
+ where sal> any (select sal from employees where job='salesman');
+ 
+ -- 52
+ select *from employees
+ where hiredate> any (select hiredate from employees where job='clerk');
+ -- 53
+ select ename,sal
+ from employees
+ where sal< any(select sal from employees where job='manager');
+ -- 54
+ select ename,hiredate
+ from employees
+ where hiredate< any(select hiredate from employees where job='manager');
+ -- 55
+ select ename,hiredate,sal
+ from employees
+ where hiredate>any (select hiredate from employees where job='manager') and sal>(select sal from employees where job='clerks'); 
+ 
+ -- 56
+ select * from employees
+ where job='clerk' and hiredate< any(select hiredate from employees where job='salesman');
+ -- 57
+ select *
+ from employees
+ where deptno in (select deptno from departments where dname='accounting' or dname='sales');
+ -- 58
+ select dname
+ from departments 
+ where deptno in (select deptno from employees where ename in ('smith','king','miller')) ;
+ -- 59
+ select ename ,deptno,job
+ from employees
+ where deptno in (select deptno from departments where loc ='new york'or loc='chicago') ;
+ 
+ -- 60
+ select ename,hiredate,deptno 
+ from employees
+ where hiredate> all (select hiredate from employees where deptno=10);
+ 
+ select max(sal)
+ from employees
+ where sal<(select max(sal)  from employees );
+ 
+ select min(sal)
+ from employees
+ where sal>(select min(sal) from employees);
+ -- joins 
+ -- cross join 
+ select ename,dname
+ from employees cross join departments;
+ 
+ select e.ename ,d.deptno
+ from employees e cross join departments d;
+ 
+ -- inner join 
+ 
+ select e.ename,d.dname
+ from employees e
+ inner join departments d on e.deptno=d.deptno;
+ 
+ select e.ename,d.loc
+ from employees e
+ inner join departments d on e.job='manager' and e.deptno=d.deptno;
+ 
+ select e.ename,e.sal,d.dname
+ from employees e inner join departments d on e.deptno=d.deptno;
+ 
+ select e.ename ,e.sal ,d.dname
+ from employees e 
+ inner join departments d on dname ='accounting' and e.deptno=d.deptno;
+ 
+ select d.dname,e.job
+ from employees e inner join departments d on e.job like 's%' and d.dname like's%';
+ 
+ -- right join 
+ select *
+ from employees e right join departments d on e.deptno=d.deptno;
+ 
+ -- full join 
+ select * 
+ from employees e left join departments d on e.deptno=d.deptno 
+ union all
+ select * 
+ from employees e right join departments d on e.deptno=d.deptno ;
+ 
+ -- self join 
+ select * from employees e1 join employees e2
+ on e1.mgr=e2.empno;
+ 
+ select e1.ename,e1.sal ,e2.ename,e2.sal
+ from employees e1 join employees e2 on e1.mgr=e2.empno;
+ 
+ select e1.ename,e2.ename,e1.deptno 
+ from employees e1 join employees e2 on e1.mgr=e2.empno and e1.job='clerk';  
+ 
+ select e1.ename,e2.ename
+ from employees e1 join employees e2 on  e1.mgr=e2.empno and e1.job='analyst';
+ 
+ select e1.ename,e2.ename,e1.job,e2.job
+ from employees e1 join employees e2 where e1.job=e2.job and e1.mgr=e2.empno ;
+ 
+ select e1.ename,e1.sal,e2.ename,e2.sal
+ from employees e1 join employees e2 where  e2.sal>e1.sal and e1.mgr=e2.empno;
+ 
+select e1.ename,e2.ename,d.dname,e1.hiredate
+from employees e1
+natural join departments d 
+join employees e2
+on e1.deptno=e2.deptno
+and e1.hiredate=e2.hiredate 
+and e1.empno<>e2.empno;
+
+
+select *
+from employees e join departments d 
+on e.deptno=d.deptno ;
+
+select * 
+from employees natural join departments d;
+-- self join 
+select e1.ename ,d.loc
+from employees e1  join departments d on e1.deptno=10 or e1.deptno=20 and e1.deptno=d.deptno;
+
+-- natural join 
+select e.ename,e.sal,d.dname
+from employees e natural join departments d where e.deptno=(select e2.deptno from employees e2 where e2.job='president')
+order by e.sal Desc;
+
+select d.dname ,avg(sal)
+from employees e natural join departments d where e.hiredate> '1980-12-31' 
+group by (d.dname)
+order by avg(sal) Desc;
+
+
+create view deptandemp as 
+select *
+from employees natural join departments;
+
+select * from deptandemp;
